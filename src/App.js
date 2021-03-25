@@ -5,21 +5,24 @@ import firebase from './firebase';
 import Header from './components/Header';
 import PopMenu from './components/PopMenu';
 import UsePopMenu from './components/UsePopMenu';
+import UseWelcome from './components/UseWelcome';
+import WelcomeMenu from './components/WelcomeMenu'
 
 
 function App() {
 
   const db = firebase.firestore()
 
+  const [gameStarted, setGameStarted] = useState(false)
   const [pikachuFound, setPikachuFound] = useState(false);
   const [linkFound, setLinkFound] = useState(false);
   const [selection, setSelection] = useState()
-  const [timer, setTimer] = useState();
+  const [isActive, setIsActive] = useState(false)
   const {isShowing, toggle} = UsePopMenu();
   let searchX = '';
   let searchY = '';
   const [guess, setGuess] = useState({X:'', Y:''})
-
+  const {welcomeShowing, toggleWelcome} = UseWelcome()
   const [modalDisplay, setModalDisplay] = useState();
 
   const mouseCoords = (e) => {
@@ -80,11 +83,24 @@ function App() {
         }
   } 
 
-  console.log(pikachuFound, linkFound)
+  const startGame = () => {
+    toggleWelcome()
+    setGameStarted(!gameStarted)
+  }
+
+
+
   return (
     <div className='container'>
     <div className="app">
-      <Header timer={timer} setTimer={setTimer} linkFound={linkFound} pikachuFound={pikachuFound}/>
+    <WelcomeMenu 
+          welcomeShowing={welcomeShowing}
+          hide={toggleWelcome}
+          startGame={startGame}
+          isActive={isActive}
+          setIsActive={setIsActive}
+        />
+      <Header linkFound={linkFound} pikachuFound={pikachuFound}/>
       <div className='gameboard'>
       <img className='gameImage' src={mashUp} onClick={playerClick} alt='anime collage'></img>
       <PopMenu
@@ -94,6 +110,7 @@ function App() {
         linkFound={linkFound} pikachuFound={pikachuFound}
         getSelection={getSelection}
         />
+
     </div>
     </div>
     </div>
