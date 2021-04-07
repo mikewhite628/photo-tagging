@@ -6,17 +6,20 @@ import Header from './components/Header';
 import PopMenu from './components/PopMenu';
 import UsePopMenu from './components/UsePopMenu';
 import UseWelcome from './components/UseWelcome';
-import WelcomeMenu from './components/WelcomeMenu'
+import WelcomeMenu from './components/WelcomeMenu';
+import GameOver from './components/GameOver';
+import UseGameOver from './components/UseGameOver';
 
 
 function App() {
 
   const db = firebase.firestore()
 
-  const [gameStarted, setGameStarted] = useState(false)
+  const [gameStarted, setGameStarted] = useState(false);
+  const { gameOverShowing, toggleGameOver } = UseGameOver()
   const [pikachuFound, setPikachuFound] = useState(false);
   const [linkFound, setLinkFound] = useState(false);
-  const [selection, setSelection] = useState()
+  const [selection, setSelection] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const {isShowing, toggle} = UsePopMenu();
   let searchX = '';
@@ -32,7 +35,7 @@ function App() {
 
   
   const imageFound = (doc) => {
-    alert(`${doc.data().name} found!`)
+    console.log(`${doc.data().name} found!`)
     if (doc.data().name === 'Pikachu') {
       setPikachuFound(true)
       console.log('found pika')
@@ -43,12 +46,12 @@ function App() {
   }
 
   const getSelection = (e) => {
-    const playerSelection =  e.target.innerHTML
-     setSelection(playerSelection)
-     checkForHit(guess)
-     toggle()
-     
- 
+    setSelection(e.target.innerHTML)
+    toggle()
+  }
+
+  const checkSelection = () => {
+    checkForHit(guess)
   }
 
   const playerClick = (e) => {
@@ -60,12 +63,9 @@ function App() {
       setModalDisplay({top:`${searchY - 30}px`, left:`${searchX}px`})
       console.log(searchY, searchX)
       setGuess({X: x, Y: y})
-      toggle()
-      console.log(x, y)
-      
+      toggle()  
     }
 }
-
 
   function checkForHit () {
     db.collection('chars').get().then((snapshot) => {
@@ -78,7 +78,8 @@ function App() {
   const registerHit = (doc) => {
     if ((doc.data().xmin < guess.X && doc.data().xmax > guess.X) &&
         (doc.data().ymin < guess.Y && doc.data().ymax > guess.Y) &&
-        (` ${doc.data().name === selection}`)) {
+        (`${doc.data().name}` === selection)) {
+          console.log(`doc name: ${doc.data().name}`)
         imageFound(doc)
         }
   } 
@@ -87,8 +88,6 @@ function App() {
     toggleWelcome()
     setGameStarted(!gameStarted)
   }
-
-
 
   return (
     <div className='container'>
@@ -100,7 +99,13 @@ function App() {
           isActive={isActive}
           setIsActive={setIsActive}
         />
-      <Header linkFound={linkFound} pikachuFound={pikachuFound}/>
+      <GameOver 
+        gameOverShowing={gameOverShowing}
+        toggleGameOver={toggleGameOver}
+        linkFound={linkFound}
+        pikachuFound={pikachuFound}
+        />
+      <Header linkFound={linkFound} pikachuFound={pikachuFound} gameStarted={gameStarted} setGameStarted={setGameStarted} />
       <div className='gameboard'>
       <img className='gameImage' src={mashUp} onClick={playerClick} alt='anime collage'></img>
       <PopMenu
@@ -110,7 +115,7 @@ function App() {
         linkFound={linkFound} pikachuFound={pikachuFound}
         getSelection={getSelection}
         />
-
+        {selection ? checkSelection() : console.log('notyhing selected')}
     </div>
     </div>
     </div>
