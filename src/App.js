@@ -27,6 +27,9 @@ function App() {
   const [guess, setGuess] = useState({X:'', Y:''})
   const {welcomeShowing, toggleWelcome} = UseWelcome()
   const [modalDisplay, setModalDisplay] = useState();
+  const [timeRemaining, setTimeRemaining] = useState()
+
+
 
   const mouseCoords = (e) => {
     searchX = e.pageX;
@@ -46,7 +49,7 @@ function App() {
   }
 
   const getSelection = (e) => {
-    setSelection(e.target.innerHTML)
+    setSelection(e.target.id)
     toggle()
   }
 
@@ -104,8 +107,12 @@ function App() {
         toggleGameOver={toggleGameOver}
         linkFound={linkFound}
         pikachuFound={pikachuFound}
+
         />
-      <Header linkFound={linkFound} pikachuFound={pikachuFound} gameStarted={gameStarted} setGameStarted={setGameStarted} />
+      <Header linkFound={linkFound} pikachuFound={pikachuFound} gameStarted={gameStarted} setGameStarted={setGameStarted} 
+        timeRemaining={timeRemaining}
+        setTimeRemaining={setTimeRemaining}
+      />
       <div className='gameboard'>
       <img className='gameImage' src={mashUp} onClick={playerClick} alt='anime collage'></img>
       <PopMenu

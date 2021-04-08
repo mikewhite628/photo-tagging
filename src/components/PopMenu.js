@@ -12,8 +12,9 @@ const PopMenu = ({isShowing, hide, modalDisplay, pikachuFound, linkFound, getSel
                     <span>&times;</span>
                 </button>
                 </div>
-                       <div onClick={getSelection}>{linkFound ? 'Link Found' : 'Link'}</div><img src={Link} className={'pop-link'}></img>
-                       <div onClick={getSelection}>{pikachuFound ? 'Pikachu Found' : 'Pikachu'}</div><img src={Pikachu} className={'pop-pikachu'}></img>
+                       <div onClick={getSelection} id={'Link'} className={'selection-container'}>{linkFound ? 'Link Found' : 'Link'}<img src={Link} id={'Link'} className={'pop-link'}></img> </div> 
+                       <div onClick={getSelection} id={'Pikachu'} className={'selection-container'}>{pikachuFound ? 'Pikachu Found' : 'Pikachu'} <img src={Pikachu} id={'Pikachu'} className={'pop-pikachu'}></img> </div>
+
             </div>
     </React.Fragment>, document.body 
 ) : null

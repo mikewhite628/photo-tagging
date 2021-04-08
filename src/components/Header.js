@@ -8,10 +8,13 @@ const Header = (props) => {
         pikachuFound,
         linkFound,
         gameStarted,
-        setGameStarted
+        setGameStarted,
+        timeRemaining,
+        setTimeRemaining
     } = props
 
-    const [ startButton, setStartButton ] = useState('control-button gameplay-button')
+    const startButton = 'control-button gameplay-button'
+    const pauseButton = 'pause-button'
 
     const [second, setSecond] = useState('00');
     const [minute, setMinute] = useState('00');
@@ -39,22 +42,21 @@ const Header = (props) => {
                 setMinute(computedMinute)
     
                 setCounter(counter => counter + 1);
+                setTimeRemaining(`${minute}:${second}`)
             }, 1000)
 
         }
         return () => clearInterval(intervalId)
     }, [gameStarted, counter])
 
-    const styleStartButton = () => {
-        setStartButton('pause-button')
-    }
+    
 
 return (
     <div className='nav'>
         {linkFound ? <img src={Link} className={'link-img found-img'}></img> : <img src={Link} className={'link-img'}></img>} {pikachuFound ? <img src={Pikachu} className={'pikachu-img found-img'}></img> : <img src={Pikachu} className={'pikachu-img'}></img>}
         <span> Find US </span>
         <span> Time Ramining {minute}:{second} </span>
-        <button className={startButton} onClick={() => setGameStarted(!gameStarted)}> {gameStarted ? 'Pause' : 'Start'} </button>
+        <button className={!gameStarted ? startButton : pauseButton} onClick={() => setGameStarted(!gameStarted)}> {gameStarted ? 'Pause' : 'Start'} </button>
         <button className={'gameplay-button'} onClick={() => reset()}> Reset </button>
         
     </div>
