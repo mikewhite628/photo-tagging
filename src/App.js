@@ -31,6 +31,7 @@ function App() {
 
 
 
+
   const mouseCoords = (e) => {
     searchX = e.pageX;
     searchY = e.pageY;
@@ -92,6 +93,10 @@ function App() {
     setGameStarted(!gameStarted)
   }
 
+  const playAgain = () => {
+  window.location.reload()
+  }
+
   return (
     <div className='container'>
     <div className="app">
@@ -107,6 +112,8 @@ function App() {
         toggleGameOver={toggleGameOver}
         linkFound={linkFound}
         pikachuFound={pikachuFound}
+        timeRemaining={timeRemaining}
+        playAgain={playAgain}
 
         />
       <Header linkFound={linkFound} pikachuFound={pikachuFound} gameStarted={gameStarted} setGameStarted={setGameStarted} 

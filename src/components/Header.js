@@ -9,8 +9,7 @@ const Header = (props) => {
         linkFound,
         gameStarted,
         setGameStarted,
-        timeRemaining,
-        setTimeRemaining
+        setTimeRemaining,
     } = props
 
     const startButton = 'control-button gameplay-button'
@@ -30,7 +29,7 @@ const Header = (props) => {
     useEffect(() => {
         let intervalId;
 
-        if (gameStarted) {
+        if (gameStarted && (!linkFound && !pikachuFound)) {
             intervalId = setInterval(() => {
                 const secondCounter = counter % 60;
                 const minuteCounter = Math.floor(counter / 60);

@@ -64,6 +64,9 @@ button:focus {
 .popmenu-close-button {
   background-color: #2962ff;
   border: none;
+  position: absolute;
+  top: 0%;
+  right: 0%;
 }
 
 .pop-pikachu {
@@ -161,6 +164,22 @@ li {
   height: 30px;
   width: 90px;
   font-size: 15px;
+}
+
+.restart-button {
+  background-color: #2962ff;
+  border-radius: 10px;
+  border: none;
+  height: 45px;
+  width: 120px;
+  font-size: 20px;
+  position: absolute;
+  bottom: 5%;
+  left: 40%;
+}
+
+.gameover-text {
+  margin-top: 70px;
 }
 
 /*# sourceMappingURL=App.css.map */
